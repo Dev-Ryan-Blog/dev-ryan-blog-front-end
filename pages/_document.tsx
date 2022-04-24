@@ -1,0 +1,20 @@
+import { css } from "@emotion/react";
+import { Head, Html, Main, NextScript } from "next/document";
+
+export default function Document() {
+	return (
+		<Html>
+			<Head>
+				<link rel="shortcut icon" href="/DevRyanLogo.svg" />
+			</Head>
+			<body
+				css={css`
+				overflow-y: scroll;
+				height: 100vh;
+			`}>
+				<Main />
+				<NextScript />
+			</body>
+		</Html>
+	);
+}
