@@ -1,7 +1,34 @@
-import type { NextPage } from "next";
+import * as GraphQLGetPosts from "@graphql/getPosts";
+import type { Posts } from "blogTypes";
+import { request } from "graphql-request";
+import type { GetStaticPropsResult, NextPage } from "next";
 
-const Home: NextPage = () => {
-	return <div>Hello!</div>;
+type Props = {
+	data: Posts;
 };
 
-export default Home;
+export async function getServerSideProps(): Promise<
+	GetStaticPropsResult<Props>
+> {
+	const posts = await request<Posts>(
+		GraphQLGetPosts.endpoint,
+		GraphQLGetPosts.query
+	);
+	return {
+		props: {
+			data: posts
+		}
+	};
+}
+
+const Index: NextPage<Props> = (props: Props) => {
+	return (
+		<>
+			{props.data.posts.data.map((post) => (
+				<div key={post.id}>{post.attributes.Title}</div>
+			))}
+		</>
+	);
+};
+
+export default Index;

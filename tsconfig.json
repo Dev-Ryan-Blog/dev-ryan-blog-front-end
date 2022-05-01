@@ -43,11 +43,18 @@
       ],
       "@context/*": [
         "context/*"
+      ],
+      "@graphql/*": [
+        "graphql/*"
+      ],
+      "@types/*": [
+        "types/*"
       ]
     },
     "jsxImportSource": "@emotion/react"
   },
   "include": [
+    "types/*.d.ts",
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx"
