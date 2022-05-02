@@ -1,4 +1,4 @@
-export const endpoint = "http://localhost:1337/graphql";
+export const getEndpoint = (base_url: string): string => `${base_url}/graphql`;
 export const query = `
 query getPosts {
     posts {

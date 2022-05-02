@@ -11,7 +11,7 @@ export async function getServerSideProps(): Promise<
 	GetStaticPropsResult<Props>
 > {
 	const posts = await request<Posts>(
-		GraphQLGetPosts.endpoint,
+		GraphQLGetPosts.getEndpoint(process.env.STRAPI_URL),
 		GraphQLGetPosts.query
 	);
 	return {
