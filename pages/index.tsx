@@ -1,3 +1,4 @@
+import { css } from "@emotion/react";
 import * as GraphQLGetPosts from "@graphql/getPosts";
 import type { Posts } from "blogTypes";
 import { request } from "graphql-request";
@@ -21,14 +22,15 @@ export async function getServerSideProps(): Promise<
 	};
 }
 
-const Index: NextPage<Props> = (props: Props) => {
+const Home: NextPage<Props> = (_props: Props) => {
 	return (
-		<>
-			{props.data.posts.data.map((post) => (
-				<div key={post.id}>{post.attributes.Title}</div>
-			))}
-		</>
+		<main
+			css={css`
+		height: 100%;
+		`}>
+			This is my blog!
+		</main>
 	);
 };
 
-export default Index;
+export default Home;
