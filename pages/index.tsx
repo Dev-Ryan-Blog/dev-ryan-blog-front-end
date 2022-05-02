@@ -11,9 +11,11 @@ type Props = {
 export async function getServerSideProps(): Promise<
 	GetStaticPropsResult<Props>
 > {
+	const args: GraphQLGetPosts.Args = {};
 	const posts = await request<Posts>(
 		GraphQLGetPosts.getEndpoint(process.env.STRAPI_URL),
-		GraphQLGetPosts.query
+		GraphQLGetPosts.query,
+		args
 	);
 	return {
 		props: {
@@ -22,7 +24,9 @@ export async function getServerSideProps(): Promise<
 	};
 }
 
-const Home: NextPage<Props> = (_props: Props) => {
+const Home: NextPage<Props> = (props: Props) => {
+	const posts = props.data.posts;
+	console.log(posts);
 	return (
 		<main
 			css={css`

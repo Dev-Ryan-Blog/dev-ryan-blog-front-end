@@ -1,7 +1,8 @@
 export const getEndpoint = (base_url: string): string => `${base_url}/graphql`;
+
 export const query = `
-query getPosts {
-    posts {
+query getPosts($sort: String = "createdAt:desc", $page: Int = 1, $pageSize: Int = 10) {
+    posts(sort: [$sort], pagination: {page: $page, pageSize: $pageSize}) {
         data {
             id
             attributes {
@@ -26,3 +27,9 @@ query getPosts {
         }
     }
 }`;
+
+export type Args = {
+	sort?: string;
+	page?: number;
+	pageSize?: number;
+};
