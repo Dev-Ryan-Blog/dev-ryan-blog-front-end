@@ -11,8 +11,8 @@ const Logo: React.FC<BoxProps> = (props) => {
 					<Image
 						src="/DevRyanLogo.svg"
 						alt="Dev Ryan Svg"
-						width="70px"
-						height="54px"
+						width="50px"
+						height="38px"
 						loading="eager"
 					/>
 				</a>

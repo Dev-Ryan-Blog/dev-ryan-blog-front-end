@@ -14,7 +14,7 @@ const MenuItem: React.FC<Props> = ({ children, to = "/", ...rest }) => {
 			<a>
 				<Text
 					display="block"
-					fontSize="x-large"
+					fontSize="large"
 					px={"calc(2vw - 2px)"}
 					{...rest}>
 					{children}

@@ -21,7 +21,7 @@ const NavBar = () => {
 	return (
 		<NavBarContainer>
 			<Logo
-				w="70px"
+				w="50px"
 				color={["white", "white", "primary.500", "primary.500"]}
 			/>
 			<MenuButton onToggle={onToggle} isOpen={isOpen} />
@@ -41,7 +41,7 @@ const NavBarContainer: React.FC<Children> = ({ children }) => (
 		justify="space-between"
 		wrap="wrap"
 		w="100%"
-		h="4.3rem"
+		h="3.4rem"
 		bg="background"
 		p={2}
 		pr={5}
@@ -59,7 +59,7 @@ const MenuLinks: React.FC<MenuLinksProps> = ({ children, isOpen }) => {
 				bg="background"
 				position="absolute"
 				left="0px"
-				top="4.3rem"
+				top="3.4rem"
 				w="100%"
 				height="auto"
 				zIndex={1}

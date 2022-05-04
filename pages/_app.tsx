@@ -8,11 +8,11 @@ import type { AppProps } from "next/app";
 function App({ Component, pageProps }: AppProps) {
 	return (
 		<ChakraProvider theme={Theme}>
-			<Grid templateRows="4.3rem auto">
+			<Grid templateRows="3.4rem auto">
 				<GridItem position="sticky" top="0px" left="0px" zIndex="1">
 					<NavBar />
 				</GridItem>
-				<GridItem minHeight="calc(100vh - 4.3rem)">
+				<GridItem minHeight="calc(100vh - 3.4rem)">
 					<Component {...pageProps} />
 				</GridItem>
 			</Grid>

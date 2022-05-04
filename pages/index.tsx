@@ -1,4 +1,3 @@
-import { Text } from "@chakra-ui/react";
 import FeaturePostPreview from "@components/post/featurePostPreview";
 import { css } from "@emotion/react";
 import * as GraphQLGetPosts from "@graphql/getPosts";
@@ -34,15 +33,13 @@ export async function getServerSideProps(): Promise<
 const Home: NextPage<Props> = (props: Props) => {
 	const posts: Array<Post> = props.data;
 	const featurePost: Post = posts[0];
-	const otherPosts: Array<Post> = posts.slice(1);
+	// const otherPosts: Array<Post> = posts.slice(1);
 	return (
 		<main
 			css={css`
 		height: 100%;
 		`}>
-			<Text>
-				<FeaturePostPreview post={featurePost} />
-			</Text>
+			<FeaturePostPreview post={featurePost} />
 		</main>
 	);
 };
