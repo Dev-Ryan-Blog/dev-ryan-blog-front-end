@@ -1,11 +1,12 @@
+import Post from "@components/post/post";
 import { css } from "@emotion/react";
 import * as GraphQLGetPost from "@graphql/getPost";
-import type { Post } from "blogTypes";
+import { Post as PostType } from "blogTypes";
 import { request } from "graphql-request";
 import type { GetStaticPropsResult, NextPage, NextPageContext } from "next";
 
 type Props = {
-	data: Post;
+	data: PostType;
 };
 
 export async function getServerSideProps(
@@ -37,7 +38,7 @@ const Home: NextPage<Props> = (props: Props) => {
 			css={css`
 		height: 100%;
 		`}>
-			<p>{props.data.heroUrl}</p>
+			<Post {...props.data} />
 		</main>
 	);
 };
