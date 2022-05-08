@@ -3,8 +3,8 @@ import { Author, Post } from "blogTypes";
 export const getEndpoint = (base_url: string): string => `${base_url}/graphql`;
 
 export const query = `
-query getPosts($sort: String = "createdAt:desc", $page: Int = 1, $pageSize: Int = 10) {
-    posts(sort: [$sort], pagination: {page: $page, pageSize: $pageSize}) {
+query getPosts($slug: String) {
+    posts(filters: { Slug: { eq: $slug } }) {
         data {
             id
             attributes {
@@ -38,35 +38,30 @@ query getPosts($sort: String = "createdAt:desc", $page: Int = 1, $pageSize: Int 
     }
 }`;
 
-export const responseToPosts = (response: Response): Array<Post> => {
-	const data = response.posts.data;
+export const responseToPost = (response: Response): Post => {
 	const prependStrapiUrl = (url: string): string =>
 		`${process.env.STRAPI_URL}${url}`;
-	let posts: Array<Post> = data.map((rawPost) => {
-		const rawAuthor = rawPost.attributes.author.data.attributes;
-		const rawAvatar = rawAuthor.Avatar.data.attributes;
 
-		let author: Author = {
-			name: rawAuthor.Name,
-			avatarUrl: prependStrapiUrl(rawAvatar.url)
-		};
+	const [rawPost] = response.posts.data;
+	const rawAuthor = rawPost.attributes.author.data.attributes;
+	const rawAvatar = rawAuthor.Avatar.data.attributes;
 
-		let post: Post = {
-			id: rawPost.id,
-			title: rawPost.attributes.Title,
-			slug: rawPost.attributes.Slug,
-			content: rawPost.attributes.Content,
-			description: rawPost.attributes.Description,
-			heroUrl: prependStrapiUrl(
-				rawPost.attributes.Hero.data.attributes.url
-			),
-			Author: author
-		};
+	let author: Author = {
+		name: rawAuthor.Name,
+		avatarUrl: prependStrapiUrl(rawAvatar.url)
+	};
 
-		return post;
-	});
+	let post: Post = {
+		id: rawPost.id,
+		title: rawPost.attributes.Title,
+		slug: rawPost.attributes.Slug,
+		content: rawPost.attributes.Content,
+		description: rawPost.attributes.Description,
+		heroUrl: prependStrapiUrl(rawPost.attributes.Hero.data.attributes.url),
+		Author: author
+	};
 
-	return posts;
+	return post;
 };
 
 export type Response = {
@@ -105,7 +100,5 @@ export type Response = {
 };
 
 export type Args = {
-	sort?: string;
-	page?: number;
-	pageSize?: number;
+	slug: string;
 };

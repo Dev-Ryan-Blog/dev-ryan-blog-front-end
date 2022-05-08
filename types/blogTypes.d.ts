@@ -1,15 +1,16 @@
 declare module "blogTypes" {
 	export type Post = {
 		id: number;
-		Title: string;
-		Slug: string;
-		Content: string;
-		HeroUrl: string;
-		author: Author;
+		title: string;
+		slug: string;
+		content: string;
+		heroUrl: string;
+		description: string;
+		Author: Author;
 	};
 
 	export type Author = {
-		AvatarUrl: string;
-		Name: string;
+		avatarUrl: string;
+		name: string;
 	};
 }

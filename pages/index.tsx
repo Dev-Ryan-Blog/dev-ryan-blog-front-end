@@ -1,4 +1,5 @@
 import FeaturePostPreview from "@components/post/featurePostPreview";
+import PostPreview from "@components/post/postPreview";
 import { css } from "@emotion/react";
 import * as GraphQLGetPosts from "@graphql/getPosts";
 import type { Post } from "blogTypes";
@@ -33,13 +34,16 @@ export async function getServerSideProps(): Promise<
 const Home: NextPage<Props> = (props: Props) => {
 	const posts: Array<Post> = props.data;
 	const featurePost: Post = posts[0];
-	// const otherPosts: Array<Post> = posts.slice(1);
+	const otherPosts: Array<Post> = posts.slice(1);
 	return (
 		<main
 			css={css`
 		height: 100%;
 		`}>
 			<FeaturePostPreview post={featurePost} />
+			{otherPosts.map((post) => (
+				<PostPreview post={post} key={post.id} />
+			))}
 		</main>
 	);
 };
