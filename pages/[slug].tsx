@@ -18,7 +18,7 @@ export async function getServerSideProps(
 		slug: slug as string
 	};
 	const response = await request<GraphQLGetPost.Response>(
-		GraphQLGetPost.getEndpoint(process.env.STRAPI_URL),
+		GraphQLGetPost.getEndpoint(process.env.INTERNAL_STRAPI_URL),
 		GraphQLGetPost.query,
 		args
 	);

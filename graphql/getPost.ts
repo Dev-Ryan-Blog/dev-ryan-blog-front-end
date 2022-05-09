@@ -40,7 +40,7 @@ query getPosts($slug: String) {
 
 export const responseToPost = (response: Response): Post => {
 	const prependStrapiUrl = (url: string): string =>
-		`${process.env.STRAPI_URL}${url}`;
+		`${process.env.EXTERNAL_STRAPI_URL}${url}`;
 
 	const [rawPost] = response.posts.data;
 	const rawAuthor = rawPost.attributes.author.data.attributes;

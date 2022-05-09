@@ -4,6 +4,7 @@ declare namespace NodeJS {
 		TZ?: string;
 		PORT?: string;
 		PWD: string;
-		STRAPI_URL: string;
+		INTERNAL_STRAPI_URL: string;
+		EXTERNAL_STRAPI_URL: string;
 	}
 }

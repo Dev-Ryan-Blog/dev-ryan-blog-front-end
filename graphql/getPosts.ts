@@ -41,7 +41,7 @@ query getPosts($sort: String = "createdAt:desc", $page: Int = 1, $pageSize: Int 
 export const responseToPosts = (response: Response): Array<Post> => {
 	const data = response.posts.data;
 	const prependStrapiUrl = (url: string): string =>
-		`${process.env.STRAPI_URL}${url}`;
+		`${process.env.EXTERNAL_STRAPI_URL}${url}`;
 	let posts: Array<Post> = data.map((rawPost) => {
 		const rawAuthor = rawPost.attributes.author.data.attributes;
 		const rawAvatar = rawAuthor.Avatar.data.attributes;
