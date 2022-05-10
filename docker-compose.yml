@@ -1,0 +1,15 @@
+version: "3.8"
+
+services:
+    blog-frontend:
+        image: rc312/dev-ryan-blog-frontend:0.1.2
+        env_file: .env.nextjs
+        ports:
+            - 80:3000
+    blog-strapi:
+        image: rc312/dev-ryan-blog-strapi:0.1.0
+        env_file: .env.strapi
+        ports:
+            - 1337:1337
+        volumes:
+            - /blog/db:/app/.tmp

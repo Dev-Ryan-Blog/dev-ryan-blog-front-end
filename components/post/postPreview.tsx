@@ -9,7 +9,6 @@ type Props = {
 };
 
 const PostPreview: React.FC<Props> = ({ post }) => {
-	console.log(post);
 	return (
 		<Link href={`/${post.slug}`} passHref>
 			<Center h="auto" my="1rem">

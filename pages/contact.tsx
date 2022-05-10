@@ -10,10 +10,11 @@ const Contact: NextPage = () => {
 		height:100%
 		`}>
 			<Flex
-				as="nav"
 				align="center"
 				justify="space-between"
-				direction="column">
+				direction="column"
+				h={{ base: "100%", sm: "auto" }}
+				pb={{ base: "10vh", sm: "auto" }}>
 				<Image
 					src="/avatar.png"
 					alt="Dev Ryan Avatar"
@@ -26,7 +27,7 @@ const Contact: NextPage = () => {
 					Say Hello 🙌
 				</Heading>
 				<Stack
-					direction={["column", "row"]}
+					direction={"row"}
 					w="100%"
 					spacing="10%"
 					align="center"

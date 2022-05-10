@@ -40,7 +40,7 @@ const Home: NextPage<Props> = (props: Props) => {
 			css={css`
 		height: 100%;
 		`}>
-			<FeaturePostPreview post={featurePost} />
+			{featurePost != null && <FeaturePostPreview post={featurePost} />}
 			{otherPosts.map((post) => (
 				<PostPreview post={post} key={post.id} />
 			))}

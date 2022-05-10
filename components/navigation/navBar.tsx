@@ -26,7 +26,7 @@ const NavBar = () => {
 			/>
 			<MenuButton onToggle={onToggle} isOpen={isOpen} />
 			<MenuLinks isOpen={isOpen}>
-				<MenuItem to="/archive">Archive</MenuItem>
+				<MenuItem to="/">Archive</MenuItem>
 				<MenuItem to="https://portfolio.devryan.io">About Me</MenuItem>
 				<MenuItem to="/contact">Contact</MenuItem>
 			</MenuLinks>
