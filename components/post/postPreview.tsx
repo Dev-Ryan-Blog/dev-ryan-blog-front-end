@@ -10,8 +10,8 @@ type Props = {
 
 const PostPreview: React.FC<Props> = ({ post }) => {
 	return (
-		<Link href={`/${post.slug}`} passHref>
-			<Center h="auto" my="1rem">
+		<Center h="auto" my="1rem">
+			<Link href={`/${post.slug}`} passHref>
 				<Flex
 					h="100%"
 					width={["98%", "80%", "70%", "60%", "50%", "40%", "30%"]}
@@ -36,8 +36,8 @@ const PostPreview: React.FC<Props> = ({ post }) => {
 						<Text textColor="white">{post.description}</Text>
 					</Box>
 				</Flex>
-			</Center>
-		</Link>
+			</Link>
+		</Center>
 	);
 };
 
