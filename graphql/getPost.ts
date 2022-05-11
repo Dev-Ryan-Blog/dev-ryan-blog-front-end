@@ -43,12 +43,16 @@ export const responseToPost = (response: Response): Post => {
 		`${process.env.EXTERNAL_STRAPI_URL}${url}`;
 
 	const [rawPost] = response.posts.data;
+	if (typeof rawPost === "undefined") {
+		return {} as Post;
+	}
+
 	const rawAuthor = rawPost.attributes.author.data.attributes;
 	const rawAvatar = rawAuthor.Avatar.data.attributes;
 
 	let author: Author = {
 		name: rawAuthor.Name,
-		avatarUrl: prependStrapiUrl(rawAvatar.url)
+		avatarUrl: prependStrapiUrl(rawAvatar?.url)
 	};
 
 	let post: Post = {

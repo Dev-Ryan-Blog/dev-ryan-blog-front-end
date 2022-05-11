@@ -1,4 +1,3 @@
-import Post from "@components/post/post";
 import { css } from "@emotion/react";
 import * as GraphQLGetPost from "@graphql/getPost";
 import { Post as PostType } from "blogTypes";
@@ -11,7 +10,7 @@ type Props = {
 
 export async function getServerSideProps(
 	context: NextPageContext
-): Promise<GetStaticPropsResult<Props>> {
+): Promise<GetStaticPropsResult<Props | undefined>> {
 	const { slug } = context.query;
 
 	const args: GraphQLGetPost.Args = {
@@ -23,7 +22,17 @@ export async function getServerSideProps(
 		args
 	);
 
-	const post = GraphQLGetPost.responseToPost(response);
+	const post: PostType = GraphQLGetPost.responseToPost(response);
+
+	if (post.id == null) {
+		return {
+			redirect: {
+				destination: "/",
+				permanent: false
+			},
+			props: undefined
+		};
+	}
 
 	return {
 		props: {
@@ -38,7 +47,7 @@ const Home: NextPage<Props> = (props: Props) => {
 			css={css`
 		height: 100%;
 		`}>
-			<Post {...props.data} />
+			{/* <Post {...props.data} /> */}
 		</main>
 	);
 };
