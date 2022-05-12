@@ -1,3 +1,4 @@
+import Post from "@components/post/post";
 import { css } from "@emotion/react";
 import * as GraphQLGetPost from "@graphql/getPost";
 import { Post as PostType } from "blogTypes";
@@ -47,7 +48,7 @@ const Home: NextPage<Props> = (props: Props) => {
 			css={css`
 		height: 100%;
 		`}>
-			{/* <Post {...props.data} /> */}
+			<Post {...props.data} />
 		</main>
 	);
 };
