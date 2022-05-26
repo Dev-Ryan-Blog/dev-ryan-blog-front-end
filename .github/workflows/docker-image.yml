@@ -31,5 +31,5 @@ jobs:
               env:
                   username: ${{ secrets.DOCKERHUB_USERNAME }}
               run: |
-                  docker build ${username}/dev-ryan-blog-frontend:latest &&
+                  docker build . -t ${username}/dev-ryan-blog-frontend:latest &&
                   docker push ${username}/dev-ryan-blog-frontend:latest
