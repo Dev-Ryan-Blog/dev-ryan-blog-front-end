@@ -1,4 +1,5 @@
-import { Box, Center, Flex, Heading, Text } from "@chakra-ui/react";
+import { Box, Center, Flex, Heading } from "@chakra-ui/react";
+import MarkdownRenderer from "@components/markdown/markdownRenderer";
 import { Author } from "blogTypes";
 import Image from "next/image";
 import React from "react";
@@ -18,7 +19,7 @@ const Post: React.FC<Props> = ({ title, content, heroUrl, Author }) => {
 		<Center h="auto" my="1rem">
 			<Flex
 				h="100%"
-				width={["98%", "80%", "70%", "60%", "50%", "40%", "30%"]}
+				width={["98%", "80%", "70%", "60%", "60%", "50%", "40%"]}
 				align="center"
 				direction="column"
 				bg="background.200"
@@ -37,7 +38,7 @@ const Post: React.FC<Props> = ({ title, content, heroUrl, Author }) => {
 					<Heading as="h1" textColor="white">
 						{title}
 					</Heading>
-					<Text textColor="white">{content}</Text>
+					<MarkdownRenderer>{content}</MarkdownRenderer>
 				</Box>
 			</Flex>
 		</Center>
