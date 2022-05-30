@@ -14,7 +14,7 @@ const PostPreview: React.FC<Props> = ({ post }) => {
 			<Link href={`/${post.slug}`} passHref>
 				<Flex
 					h="100%"
-					width={["98%", "80%", "70%", "60%", "50%", "40%", "30%"]}
+					width={["98%", "80%", "70%", "60%", "60%", "50%", "40%"]}
 					align="center"
 					direction="column"
 					bg="background.200"
