@@ -14,7 +14,7 @@ export default function Document() {
 			<body
 				css={css`
 				overflow-y: scroll;
-				height: 100vh;
+				height: 100%;
 				background-color: #252834;
 			`}>
 				<Main />
