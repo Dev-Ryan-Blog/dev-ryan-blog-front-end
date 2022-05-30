@@ -1,11 +1,13 @@
 import {
 	Code,
 	Heading,
+	Link,
 	ListItem,
 	OrderedList,
 	Text,
 	UnorderedList
 } from "@chakra-ui/react";
+import NextLink from "next/link";
 import ReactMarkdown from "react-markdown";
 import { CodeProps } from "react-markdown/lib/ast-to-react";
 import { ReactMarkdownProps } from "react-markdown/lib/complex-types";
@@ -34,41 +36,64 @@ type Props = {
 	children: string;
 };
 
+type AnchorProps = React.ClassAttributes<HTMLAnchorElement> &
+	React.AnchorHTMLAttributes<HTMLAnchorElement> &
+	ReactMarkdownProps;
+
 const markdownTheme = {
 	p: ({ children }: ReactMarkdownProps) => (
-		<Text fontSize="l" color="white">
+		<Text
+			fontSize="xl"
+			color="white"
+			my="clamp(12px,1rem,15px)"
+			lineHeight={8}>
 			{children}
 		</Text>
 	),
 	h1: ({ children }: ReactMarkdownProps) => (
-		<Heading mb={2} fontSize="3xl" color="white" as="h1">
+		<Heading fontSize="3xl" color="white" as="h1" mt="50px">
 			{children}
 		</Heading>
 	),
 	h2: ({ children }: ReactMarkdownProps) => (
-		<Heading mb={2} fontSize="2xl" color="white" as="h2">
+		<Heading
+			fontSize="2xl"
+			color="white"
+			as="h2"
+			mt="clamp(20px,3rem,50px)"
+			mb="clamp(10px,1.5rem,50px)">
 			{children}
 		</Heading>
 	),
 	h3: ({ children }: ReactMarkdownProps) => (
-		<Heading mb={2} fontSize="xl" color="white" as="h3">
+		<Heading
+			fontSize="xl"
+			color="white"
+			as="h3"
+			mt="clamp(20px,3rem,50px)"
+			mb="clamp(10px,1.5rem,50px)">
 			{children}
 		</Heading>
 	),
 	ul: ({ children }: ReactMarkdownProps) => (
-		<UnorderedList fontSize="l" color="white">
+		<UnorderedList fontSize="xl" color="white">
 			{children}
 		</UnorderedList>
 	),
 	li: ({ children }: ReactMarkdownProps) => (
-		<ListItem fontSize="l" color="white">
+		<ListItem fontSize="xl" color="white">
 			{children}
 		</ListItem>
 	),
 	ol: ({ children }: ReactMarkdownProps) => (
-		<OrderedList fontSize="l" color="white">
+		<OrderedList fontSize="xl" color="white">
 			{children}
 		</OrderedList>
+	),
+	a: ({ href, children }: AnchorProps) => (
+		<NextLink href={href ?? "/"} passHref>
+			<Link textColor="link">{children.join("")}</Link>
+		</NextLink>
 	),
 	blockquote: ({ children }: ReactMarkdownProps) => (
 		<Text
@@ -79,7 +104,7 @@ const markdownTheme = {
 			bg="rgba(255,255,255,0.1)"
 			width="fit-content"
 			p="5px">
-			<Text fontSize="l" color="white" as="i">
+			<Text fontSize="xl" color="white" as="i">
 				{children}
 			</Text>
 		</Text>
