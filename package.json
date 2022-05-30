@@ -7,8 +7,7 @@
 		"build": "next build",
 		"start": "next start",
 		"lint": "next lint",
-		"analyze": "ANALYZE=true next build",
-		"pm2-start": "pm2 start yarn --name \"nextjs\" --interpreter bash -- start"
+		"analyze": "ANALYZE=true next build"
 	},
 	"dependencies": {
 		"@chakra-ui/react": "^2.1.0",
@@ -21,7 +20,6 @@
 		"graphql": "^16.4.0",
 		"graphql-request": "^4.2.0",
 		"next": "^12.1.5",
-		"pm2": "^5.2.0",
 		"react": "^18.0.0",
 		"react-dom": "^18.0.0",
 		"react-icons": "^4.3.1",

@@ -59,4 +59,4 @@ EXPOSE 3000
 
 ENV PORT 3000
 
-CMD ["yarn", "pm2-start"]
+CMD ["yarn", "start"]
