@@ -1,12 +1,13 @@
 import Post from "@components/post/post";
+import PostSEO from "@components/post/postSEO";
 import { css } from "@emotion/react";
 import * as GraphQLGetPost from "@graphql/getPost";
-import { Post as PostType } from "blogTypes";
+import { SEOPost as SEOPostType } from "blogTypes";
 import { request } from "graphql-request";
 import type { GetStaticPropsResult, NextPage, NextPageContext } from "next";
 
 type Props = {
-	data: PostType;
+	data: SEOPostType;
 };
 
 export async function getServerSideProps(
@@ -23,7 +24,7 @@ export async function getServerSideProps(
 		args
 	);
 
-	const post: PostType = GraphQLGetPost.responseToPost(response);
+	const post: SEOPostType = GraphQLGetPost.responseToPost(response);
 
 	if (post.id == null) {
 		return {
@@ -48,6 +49,7 @@ const Home: NextPage<Props> = (props: Props) => {
 			css={css`
 		height: 100%;
 		`}>
+			<PostSEO {...props.data} />
 			<Post {...props.data} />
 		</main>
 	);
