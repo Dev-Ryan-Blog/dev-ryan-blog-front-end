@@ -19,7 +19,8 @@ const FeaturePostPreview: React.FC<Props> = ({ post }) => {
 					direction="column"
 					bg="background.200"
 					rounded="10px"
-					p="10px">
+					p="10px"
+					cursor="pointer">
 					<Box w="100%">
 						<Image
 							src={post.heroUrl}
