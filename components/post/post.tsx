@@ -16,7 +16,7 @@ type Props = {
 
 const Post: React.FC<Props> = ({ title, content, heroUrl, Author }) => {
 	return (
-		<Center h="auto" my="1rem">
+		<Center h="auto">
 			<Flex
 				h="100%"
 				width={["98%", "80%", "70%", "60%", "60%", "50%", "40%"]}
@@ -24,7 +24,8 @@ const Post: React.FC<Props> = ({ title, content, heroUrl, Author }) => {
 				direction="column"
 				bg="background.200"
 				rounded="10px"
-				p="10px">
+				p="10px"
+				my="1rem">
 				<Box w="100%">
 					<Image
 						src={heroUrl}
