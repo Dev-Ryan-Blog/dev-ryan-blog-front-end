@@ -1,0 +1,4 @@
+Sitemap: https://blog.devryan.io/strapi/sitemap/index.xml
+
+User-agent: *
+Allow: /*
