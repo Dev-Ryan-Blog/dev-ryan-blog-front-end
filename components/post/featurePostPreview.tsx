@@ -10,7 +10,7 @@ type Props = {
 
 const FeaturePostPreview: React.FC<Props> = ({ post }) => {
 	return (
-		<Center h="auto" my="1rem">
+		<Center h="auto" py="1rem">
 			<Link href={`/${post.slug}`} passHref>
 				<Flex
 					h="100%"
