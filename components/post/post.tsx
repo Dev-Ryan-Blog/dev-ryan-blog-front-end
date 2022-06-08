@@ -5,7 +5,6 @@ import Image from "next/image";
 import React from "react";
 
 type Props = {
-	id: number;
 	title: string;
 	slug: string;
 	content: string;

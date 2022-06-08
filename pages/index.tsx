@@ -1,14 +1,13 @@
 import FeaturePostPreview from "@components/post/featurePostPreview";
-import PostPreview from "@components/post/postPreview";
 import { css } from "@emotion/react";
 import * as GraphQLGetPosts from "@graphql/getPosts";
-import type { Post } from "blogTypes";
+import type { AuthorPost } from "blogTypes";
 import { request } from "graphql-request";
 import type { GetStaticPropsResult, NextPage } from "next";
 import Head from "next/dist/shared/lib/head";
 
 type Props = {
-	data: Array<Post>;
+	data: Array<AuthorPost>;
 };
 
 export async function getServerSideProps(): Promise<
@@ -33,9 +32,7 @@ export async function getServerSideProps(): Promise<
 }
 
 const Home: NextPage<Props> = (props: Props) => {
-	const posts: Array<Post> = props.data;
-	const [featurePost] = posts;
-	const otherPosts: Array<Post> = posts.slice(1);
+	const posts: Array<AuthorPost> = props.data;
 	return (
 		<>
 			<Head>
@@ -43,13 +40,10 @@ const Home: NextPage<Props> = (props: Props) => {
 			</Head>
 			<main
 				css={css`
-		height: 100%;
-		`}>
-				{featurePost != null && (
-					<FeaturePostPreview post={featurePost} />
-				)}
-				{otherPosts.map((post) => (
-					<PostPreview post={post} key={post.id} />
+				height: 100%;
+			`}>
+				{posts.map((post) => (
+					<FeaturePostPreview post={post} key={post.slug} />
 				))}
 			</main>
 		</>

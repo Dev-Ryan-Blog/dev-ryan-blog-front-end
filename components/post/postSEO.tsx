@@ -1,19 +1,13 @@
-import { Author, SEO } from "blogTypes";
+import { SEOPost } from "blogTypes";
 import Head from "next/head";
 import React from "react";
 
 type Props = {
-	id: number;
-	title: string;
-	slug: string;
-	content: string;
-	heroUrl: string;
-	description: string;
-	Author: Author;
-	SEO: SEO;
+	post: SEOPost;
 };
 
-const PostSEO: React.FC<Props> = ({ title, content, heroUrl, Author, SEO }) => {
+const PostSEO: React.FC<Props> = ({ post }) => {
+	const { heroUrl, Author, SEO } = post;
 	return (
 		<Head>
 			<title>{SEO.metaTitle}</title>

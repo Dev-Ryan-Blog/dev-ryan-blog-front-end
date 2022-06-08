@@ -23,6 +23,7 @@ query getPosts($slug: String) {
                     data {
                         attributes {
                             Name
+							Slug
                             Avatar {
                                 data {
                                     attributes {
@@ -37,12 +38,14 @@ query getPosts($slug: String) {
 					MetaTitle
 					MetaDescription
 				}
+				createdAt
+				updatedAt
             }
         }
     }
 }`;
 
-export const responseToPost = (response: Response): SEOPost => {
+export const responseToSEOPost = (response: Response): SEOPost => {
 	const prependStrapiUrl = (url: string): string =>
 		`${process.env.EXTERNAL_STRAPI_URL}${url}`;
 
@@ -55,23 +58,25 @@ export const responseToPost = (response: Response): SEOPost => {
 	const rawAvatar = rawAuthor.Avatar.data.attributes;
 	const rawSEO = rawPost.attributes.SEO;
 
-	let author: Author = {
+	const author: Author = {
 		name: rawAuthor.Name,
-		avatarUrl: prependStrapiUrl(rawAvatar?.url)
+		avatarUrl: prependStrapiUrl(rawAvatar?.url),
+		slug: rawAuthor.Slug
 	};
 
-	let seo: SEO = {
+	const seo: SEO = {
 		metaTitle: rawSEO.MetaTitle,
 		metaDescription: rawSEO.MetaDescription
 	};
 
-	let post: SEOPost = {
-		id: rawPost.id,
+	const post: SEOPost = {
 		title: rawPost.attributes.Title,
 		slug: rawPost.attributes.Slug,
 		content: rawPost.attributes.Content,
 		description: rawPost.attributes.Description,
 		heroUrl: prependStrapiUrl(rawPost.attributes.Hero.data.attributes.url),
+		createdAt: rawPost.attributes.createdAt,
+		updatedAt: rawPost.attributes.updatedAt,
 		Author: author,
 		SEO: seo
 	};
@@ -99,6 +104,7 @@ export type Response = {
 					data: {
 						attributes: {
 							Name: string;
+							Slug: string;
 							Avatar: {
 								data: {
 									attributes: {
@@ -113,6 +119,8 @@ export type Response = {
 					MetaTitle: string;
 					MetaDescription: string;
 				};
+				createdAt: string;
+				updatedAt: string;
 			};
 		}>;
 	};

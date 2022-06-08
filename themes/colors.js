@@ -6,7 +6,8 @@ const Colors = {
 		"background.200": "#1d212b",
 		"background.300": "#1a1d26",
 		"background.400": "#12141a",
-		link: "#5da9ff"
+		link: "#5da9ff",
+		"text.smoke": "#bbb7a3"
 	}
 };
 

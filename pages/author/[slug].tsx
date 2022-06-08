@@ -1,13 +1,11 @@
-import Post from "@components/post/post";
-import PostSEO from "@components/post/postSEO";
 import { css } from "@emotion/react";
-import * as GraphQLGetPost from "@graphql/getPost";
-import { SEOPost as SEOPostType } from "blogTypes";
+import * as GraphQLGetAuthorPosts from "@graphql/getAuthorPosts";
+import { AuthorPosts } from "blogTypes";
 import { request } from "graphql-request";
 import type { GetStaticPropsResult, NextPage, NextPageContext } from "next";
 
 type Props = {
-	data: SEOPostType;
+	data: AuthorPosts;
 };
 
 export async function getServerSideProps(
@@ -15,18 +13,19 @@ export async function getServerSideProps(
 ): Promise<GetStaticPropsResult<Props | undefined>> {
 	const { slug } = context.query;
 
-	const args: GraphQLGetPost.Args = {
+	const args: GraphQLGetAuthorPosts.Args = {
 		slug: slug as string
 	};
-	const response = await request<GraphQLGetPost.Response>(
-		GraphQLGetPost.getEndpoint(process.env.INTERNAL_STRAPI_URL),
-		GraphQLGetPost.query,
+	const response = await request<GraphQLGetAuthorPosts.Response>(
+		GraphQLGetAuthorPosts.getEndpoint(process.env.INTERNAL_STRAPI_URL),
+		GraphQLGetAuthorPosts.query,
 		args
 	);
 
-	const post: SEOPostType = GraphQLGetPost.responseToSEOPost(response);
+	const authorPosts: AuthorPosts =
+		GraphQLGetAuthorPosts.responseToAuthorPosts(response);
 
-	if (post.slug == null) {
+	if (authorPosts.slug == null) {
 		return {
 			redirect: {
 				destination: "/",
@@ -38,7 +37,7 @@ export async function getServerSideProps(
 
 	return {
 		props: {
-			data: post
+			data: authorPosts
 		}
 	};
 }
@@ -48,10 +47,7 @@ const Home: NextPage<Props> = (props: Props) => {
 		<main
 			css={css`
 		height: 100%;
-		`}>
-			<PostSEO post={props.data} />
-			<Post {...props.data} />
-		</main>
+		`}></main>
 	);
 };
 

@@ -1,11 +1,11 @@
 import { Box, Center, Flex, Heading, Text } from "@chakra-ui/react";
-import { Post } from "blogTypes";
+import { AuthorPost } from "blogTypes";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
 type Props = {
-	post: Post;
+	post: AuthorPost;
 };
 
 const PostPreview: React.FC<Props> = ({ post }) => {
@@ -31,6 +31,13 @@ const PostPreview: React.FC<Props> = ({ post }) => {
 						/>
 					</Box>
 					<Box py="10px" px="10%" h="100%" w="100%">
+						<Image
+							src={post.Author.avatarUrl}
+							layout="responsive"
+							alt="Author Avatar"
+							width="64px"
+							height="64px"
+						/>
 						<Heading as="h1" textColor="white">
 							{post.title}
 						</Heading>

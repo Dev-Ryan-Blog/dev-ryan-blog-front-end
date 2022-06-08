@@ -1,36 +1,38 @@
-import { Author, AuthorPost } from "blogTypes";
+import { AuthorPosts, Post } from "blogTypes";
 
 export const getEndpoint = (base_url: string): string => `${base_url}/graphql`;
 
 export const query = `
-query getPosts($sort: String = "createdAt:desc", $page: Int = 1, $pageSize: Int = 10) {
-    posts(sort: [$sort], pagination: {page: $page, pageSize: $pageSize}) {
+query getAuthorPosts($slug: String) {
+    authors(filters: { Slug: { eq: $slug } }) {
         data {
             id
             attributes {
-                Title
+                Name
                 Slug
-                Content
-				Description
-                Hero {
+                Avatar {
                     data {
                         attributes {
                             url
                         }
                     }
                 }
-                author {
+                posts {
                     data {
                         attributes {
-                            Name
-							Slug
-                            Avatar {
+                            Title
+                            Slug
+                            Content
+                            Description
+                            Hero {
                                 data {
                                     attributes {
                                         url
                                     }
                                 }
                             }
+                            createdAt
+                            updatedAt
                         }
                     }
                 }
@@ -41,21 +43,17 @@ query getPosts($sort: String = "createdAt:desc", $page: Int = 1, $pageSize: Int 
     }
 }`;
 
-export const responseToPosts = (response: Response): Array<AuthorPost> => {
-	const data = response.posts.data;
+export const responseToAuthorPosts = (response: Response): AuthorPosts => {
 	const prependStrapiUrl = (url: string): string =>
 		`${process.env.EXTERNAL_STRAPI_URL}${url}`;
-	let posts: Array<AuthorPost> = data.map((rawPost) => {
-		const rawAuthor = rawPost.attributes.author.data.attributes;
-		const rawAvatar = rawAuthor.Avatar.data.attributes;
 
-		let author: Author = {
-			name: rawAuthor.Name,
-			avatarUrl: prependStrapiUrl(rawAvatar.url),
-			slug: rawAuthor.Slug
-		};
+	const [rawAuthor] = response.authors.data;
+	if (typeof rawAuthor === "undefined") {
+		return {} as AuthorPosts;
+	}
 
-		let post: AuthorPost = {
+	const posts: Array<Post> = rawAuthor.attributes.posts.data.map(
+		(rawPost) => ({
 			title: rawPost.attributes.Title,
 			slug: rawPost.attributes.Slug,
 			content: rawPost.attributes.Content,
@@ -64,46 +62,54 @@ export const responseToPosts = (response: Response): Array<AuthorPost> => {
 				rawPost.attributes.Hero.data.attributes.url
 			),
 			createdAt: rawPost.attributes.createdAt,
-			updatedAt: rawPost.attributes.updatedAt,
-			Author: author
-		};
+			updatedAt: rawPost.attributes.updatedAt
+		})
+	);
 
-		return post;
-	});
+	const authorPosts: AuthorPosts = {
+		name: rawAuthor.attributes.Name,
+		slug: rawAuthor.attributes.Slug,
+		avatarUrl: prependStrapiUrl(
+			rawAuthor.attributes.Avatar.data.attributes.url
+		),
+		posts
+	};
 
-	return posts;
+	return authorPosts;
 };
 
 export type Response = {
-	posts: {
+	authors: {
 		data: Array<{
 			id: number;
 			attributes: {
-				Title: string;
+				Name: string;
 				Slug: string;
-				Content: string;
-				Description: string;
-				Hero: {
+				Avatar: {
 					data: {
 						attributes: {
 							url: string;
 						};
 					};
 				};
-				author: {
-					data: {
+				posts: {
+					data: Array<{
 						attributes: {
-							Name: string;
+							Title: string;
 							Slug: string;
-							Avatar: {
+							Content: string;
+							Description: string;
+							Hero: {
 								data: {
 									attributes: {
 										url: string;
 									};
 								};
 							};
+							createdAt: string;
+							updatedAt: string;
 						};
-					};
+					}>;
 				};
 				createdAt: string;
 				updatedAt: string;
@@ -113,7 +119,5 @@ export type Response = {
 };
 
 export type Args = {
-	sort?: string;
-	page?: number;
-	pageSize?: number;
+	slug: string;
 };
