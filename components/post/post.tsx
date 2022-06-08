@@ -34,7 +34,11 @@ const Post: React.FC<Props> = ({ title, content, heroUrl, Author }) => {
 						height="1080px"
 					/>
 				</Box>
-				<Box py="10px" px="10%" h="100%" w="100%">
+				<Box
+					py={{ base: "0px", sm: "10px" }}
+					px={{ base: "0px", sm: "10%" }}
+					h="100%"
+					w="100%">
 					<Heading
 						as="h1"
 						textColor="white"

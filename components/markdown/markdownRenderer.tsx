@@ -120,7 +120,9 @@ const markdownTheme = {
 				{code}
 			</SyntaxHighlighter>
 		) : (
-			<Code colorScheme="whiteAlpha">{code}</Code>
+			<Code colorScheme="blackAlpha" variant="solid" rounded="5px">
+				{code}
+			</Code>
 		);
 	}
 };
