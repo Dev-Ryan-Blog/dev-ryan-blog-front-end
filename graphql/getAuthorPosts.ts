@@ -1,15 +1,16 @@
-import { AuthorPosts, Post } from "blogTypes";
+import { AuthorBioPosts, Post } from "blogTypes";
 
 export const getEndpoint = (base_url: string): string => `${base_url}/graphql`;
 
 export const query = `
-query getAuthorPosts($slug: String) {
+query getAuthorBioPosts($slug: String) {
     authors(filters: { Slug: { eq: $slug } }) {
         data {
             id
             attributes {
                 Name
                 Slug
+                Bio
                 Avatar {
                     data {
                         attributes {
@@ -43,13 +44,15 @@ query getAuthorPosts($slug: String) {
     }
 }`;
 
-export const responseToAuthorPosts = (response: Response): AuthorPosts => {
+export const responseToAuthorBioPosts = (
+	response: Response
+): AuthorBioPosts => {
 	const prependStrapiUrl = (url: string): string =>
 		`${process.env.EXTERNAL_STRAPI_URL}${url}`;
 
 	const [rawAuthor] = response.authors.data;
 	if (typeof rawAuthor === "undefined") {
-		return {} as AuthorPosts;
+		return {} as AuthorBioPosts;
 	}
 
 	const posts: Array<Post> = rawAuthor.attributes.posts.data.map(
@@ -66,16 +69,17 @@ export const responseToAuthorPosts = (response: Response): AuthorPosts => {
 		})
 	);
 
-	const authorPosts: AuthorPosts = {
+	const authorBioPosts: AuthorBioPosts = {
 		name: rawAuthor.attributes.Name,
 		slug: rawAuthor.attributes.Slug,
+		bio: rawAuthor.attributes.Bio,
 		avatarUrl: prependStrapiUrl(
 			rawAuthor.attributes.Avatar.data.attributes.url
 		),
 		posts
 	};
 
-	return authorPosts;
+	return authorBioPosts;
 };
 
 export type Response = {
@@ -85,6 +89,7 @@ export type Response = {
 			attributes: {
 				Name: string;
 				Slug: string;
+				Bio: string;
 				Avatar: {
 					data: {
 						attributes: {

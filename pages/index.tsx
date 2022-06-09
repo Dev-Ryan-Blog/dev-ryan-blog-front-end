@@ -1,4 +1,4 @@
-import FeaturePostPreview from "@components/post/featurePostPreview";
+import AuthorPostPreview from "@components/post/AuthorPostPreview";
 import { css } from "@emotion/react";
 import * as GraphQLGetPosts from "@graphql/getPosts";
 import type { AuthorPost } from "blogTypes";
@@ -43,7 +43,7 @@ const Home: NextPage<Props> = (props: Props) => {
 				height: 100%;
 			`}>
 				{posts.map((post) => (
-					<FeaturePostPreview post={post} key={post.slug} />
+					<AuthorPostPreview post={post} key={post.slug} />
 				))}
 			</main>
 		</>

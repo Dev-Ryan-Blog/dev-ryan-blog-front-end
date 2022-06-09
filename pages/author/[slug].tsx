@@ -1,11 +1,13 @@
+import Author from "@components/author/author";
+import PostPreview from "@components/post/postPreview";
 import { css } from "@emotion/react";
-import * as GraphQLGetAuthorPosts from "@graphql/getAuthorPosts";
-import { AuthorPosts } from "blogTypes";
+import * as GraphQLGetAuthorBioPosts from "@graphql/getAuthorPosts";
+import { AuthorBioPosts } from "blogTypes";
 import { request } from "graphql-request";
 import type { GetStaticPropsResult, NextPage, NextPageContext } from "next";
 
 type Props = {
-	data: AuthorPosts;
+	data: AuthorBioPosts;
 };
 
 export async function getServerSideProps(
@@ -13,19 +15,19 @@ export async function getServerSideProps(
 ): Promise<GetStaticPropsResult<Props | undefined>> {
 	const { slug } = context.query;
 
-	const args: GraphQLGetAuthorPosts.Args = {
+	const args: GraphQLGetAuthorBioPosts.Args = {
 		slug: slug as string
 	};
-	const response = await request<GraphQLGetAuthorPosts.Response>(
-		GraphQLGetAuthorPosts.getEndpoint(process.env.INTERNAL_STRAPI_URL),
-		GraphQLGetAuthorPosts.query,
+	const response = await request<GraphQLGetAuthorBioPosts.Response>(
+		GraphQLGetAuthorBioPosts.getEndpoint(process.env.INTERNAL_STRAPI_URL),
+		GraphQLGetAuthorBioPosts.query,
 		args
 	);
 
-	const authorPosts: AuthorPosts =
-		GraphQLGetAuthorPosts.responseToAuthorPosts(response);
+	const AuthorBioPosts: AuthorBioPosts =
+		GraphQLGetAuthorBioPosts.responseToAuthorBioPosts(response);
 
-	if (authorPosts.slug == null) {
+	if (AuthorBioPosts.slug == null) {
 		return {
 			redirect: {
 				destination: "/",
@@ -37,17 +39,29 @@ export async function getServerSideProps(
 
 	return {
 		props: {
-			data: authorPosts
+			data: AuthorBioPosts
 		}
 	};
 }
 
 const Home: NextPage<Props> = (props: Props) => {
+	const authorBioPosts = props.data;
+	const posts = authorBioPosts.posts;
 	return (
 		<main
 			css={css`
 		height: 100%;
-		`}></main>
+		`}>
+			<Author
+				name={authorBioPosts.name}
+				bio={authorBioPosts.bio}
+				avatarUrl={authorBioPosts.avatarUrl}
+				slug={authorBioPosts.slug}
+			/>
+			{posts.map((post) => (
+				<PostPreview post={post} key={post.slug} />
+			))}
+		</main>
 	);
 };
 

@@ -10,7 +10,7 @@ type Props = {
 	post: AuthorPost;
 };
 
-const FeaturePostPreview: React.FC<Props> = ({ post }) => {
+const AuthorPostPreview: React.FC<Props> = ({ post }) => {
 	return (
 		<Center h="auto" py="1rem">
 			<Flex
@@ -65,13 +65,18 @@ const FeaturePostPreview: React.FC<Props> = ({ post }) => {
 							</a>
 						</Link>
 					</Flex>
-					<Box px="50px" pt="10px">
+					<Box px={{ base: "0px", sm: "50px" }} pt="10px">
 						<Link href={`/${post.slug}`} passHref>
 							<a>
 								<Heading
 									as="h1"
 									textColor="white"
 									noOfLines={2}
+									fontSize={{
+										base: "3xl",
+										sm: "4xl",
+										lg: "5xl"
+									}}
 									maxW="100%">
 									{post.title}
 								</Heading>
@@ -90,4 +95,4 @@ const FeaturePostPreview: React.FC<Props> = ({ post }) => {
 	);
 };
 
-export default FeaturePostPreview;
+export default AuthorPostPreview;

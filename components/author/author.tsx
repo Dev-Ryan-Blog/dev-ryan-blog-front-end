@@ -1,19 +1,17 @@
 import { Box, Center, Flex, Heading } from "@chakra-ui/react";
 import MarkdownRenderer from "@components/markdown/markdownRenderer";
-import { Author } from "blogTypes";
+import { css } from "@emotion/react";
 import Image from "next/image";
 import React from "react";
 
 type Props = {
-	title: string;
+	avatarUrl: string;
+	name: string;
 	slug: string;
-	content: string;
-	heroUrl: string;
-	description: string;
-	Author: Author;
+	bio: string;
 };
 
-const Post: React.FC<Props> = ({ title, content, heroUrl, Author }) => {
+const Post: React.FC<Props> = ({ avatarUrl, name, slug, bio }) => {
 	return (
 		<Center h="auto">
 			<Flex
@@ -25,13 +23,18 @@ const Post: React.FC<Props> = ({ title, content, heroUrl, Author }) => {
 				rounded="10px"
 				p="10px"
 				my="1rem">
-				<Box w="100%">
+				<Box
+					w={{ base: "50%", sm: "40%", md: "30%", lg: "20%" }}
+					minW="100px">
 					<Image
-						src={heroUrl}
+						src={avatarUrl}
 						layout="responsive"
 						alt="Project Tumbnail"
-						width="2560px"
-						height="1080px"
+						width="1000px"
+						height="1000px"
+						css={css`
+						border-radius: 50%;
+					`}
 					/>
 				</Box>
 				<Box
@@ -45,9 +48,9 @@ const Post: React.FC<Props> = ({ title, content, heroUrl, Author }) => {
 						textAlign="center"
 						fontSize={{ base: "3xl", sm: "4xl", lg: "5xl" }}
 						p="10px">
-						{title}
+						{name}
 					</Heading>
-					<MarkdownRenderer>{content}</MarkdownRenderer>
+					<MarkdownRenderer>{bio}</MarkdownRenderer>
 				</Box>
 			</Flex>
 		</Center>

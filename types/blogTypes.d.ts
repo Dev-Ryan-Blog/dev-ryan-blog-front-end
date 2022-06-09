@@ -23,7 +23,8 @@ declare module "blogTypes" {
 		slug: string;
 	};
 
-	export type AuthorPosts = Author & {
+	export type AuthorBioPosts = Author & {
+		bio: string;
 		posts: Array<Post>;
 	};
 

@@ -43,21 +43,25 @@ type AnchorProps = React.ClassAttributes<HTMLAnchorElement> &
 const markdownTheme = {
 	p: ({ children }: ReactMarkdownProps) => (
 		<Text
-			fontSize="xl"
+			fontSize={{ base: "md", sm: "lg", lg: "xl" }}
 			color="white"
 			my="clamp(12px,1rem,15px)"
-			lineHeight={8}>
+			lineHeight={[6, 8]}>
 			{children}
 		</Text>
 	),
 	h1: ({ children }: ReactMarkdownProps) => (
-		<Heading fontSize="3xl" color="white" as="h1" mt="50px">
+		<Heading
+			fontSize={{ base: "2xl", sm: "3xl", lg: "4xl" }}
+			color="white"
+			as="h1"
+			mt="50px">
 			{children}
 		</Heading>
 	),
 	h2: ({ children }: ReactMarkdownProps) => (
 		<Heading
-			fontSize="2xl"
+			fontSize={{ base: "xl", sm: "2xl", lg: "3xl" }}
 			color="white"
 			as="h2"
 			mt="clamp(20px,3rem,50px)"
@@ -67,7 +71,7 @@ const markdownTheme = {
 	),
 	h3: ({ children }: ReactMarkdownProps) => (
 		<Heading
-			fontSize="xl"
+			fontSize={{ base: "lg", sm: "xl", lg: "2xl" }}
 			color="white"
 			as="h3"
 			mt="clamp(20px,3rem,50px)"
@@ -76,17 +80,21 @@ const markdownTheme = {
 		</Heading>
 	),
 	ul: ({ children }: ReactMarkdownProps) => (
-		<UnorderedList fontSize="xl" color="white">
+		<UnorderedList
+			fontSize={{ base: "md", sm: "lg", lg: "2xl" }}
+			color="white">
 			{children}
 		</UnorderedList>
 	),
 	li: ({ children }: ReactMarkdownProps) => (
-		<ListItem fontSize="xl" color="white">
+		<ListItem fontSize={{ base: "md", sm: "lg", lg: "2xl" }} color="white">
 			{children}
 		</ListItem>
 	),
 	ol: ({ children }: ReactMarkdownProps) => (
-		<OrderedList fontSize="xl" color="white">
+		<OrderedList
+			fontSize={{ base: "md", sm: "lg", lg: "2xl" }}
+			color="white">
 			{children}
 		</OrderedList>
 	),
