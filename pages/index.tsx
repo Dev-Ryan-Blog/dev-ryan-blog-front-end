@@ -37,6 +37,34 @@ const Home: NextPage<Props> = (props: Props) => {
 		<>
 			<Head>
 				<title>Dev Ryan Blog</title>
+				<meta name="og:title" content="Dev Ryan Blog" />
+				<meta
+					name="og:description"
+					content="Dev Ryan's blog features articles that aim to help developers overcome obsticles that are poorly documented. Every article is a learning experience documented for future developers!"
+				/>
+				<meta
+					name="og:image"
+					content={`${process.env.NEXT_PUBLIC_BASE_URL}DevRyanLogo.svg`}
+				/>
+				<meta
+					name="og:url"
+					content={`${process.env.NEXT_PUBLIC_BASE_URL}`}
+				/>
+
+				<meta name="twitter:title" content="Dev Ryan Blog" />
+				<meta
+					name="twitter:description"
+					content="Dev Ryan's blog features articles that aim to help developers overcome obsticles that are poorly documented. Every article is a learning experience documented for future developers!"
+				/>
+				<meta
+					name="twitter:image"
+					content={`${process.env.NEXT_PUBLIC_BASE_URL}DevRyanLogo.svg`}
+				/>
+				<meta name="twitter:card" content="summary_large_image" />
+				<meta
+					name="twitter:url"
+					content={process.env.NEXT_PUBLIC_BASE_URL}
+				/>
 			</Head>
 			<main
 				css={css`

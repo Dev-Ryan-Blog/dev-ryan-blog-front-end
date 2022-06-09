@@ -7,7 +7,7 @@ type Props = {
 };
 
 const PostSEO: React.FC<Props> = ({ post }) => {
-	const { heroUrl, Author, SEO } = post;
+	const { heroUrl, Author, SEO, slug } = post;
 	return (
 		<Head>
 			<title>{SEO.metaTitle}</title>
@@ -16,7 +16,10 @@ const PostSEO: React.FC<Props> = ({ post }) => {
 			<meta name="og:title" content={SEO.metaTitle} />
 			<meta name="og:description" content={SEO.metaDescription} />
 			<meta name="og:image" content={heroUrl} />
-			<meta name="og:url" content={process.env.NEXT_PUBLIC_BASE_URL} />
+			<meta
+				name="og:url"
+				content={`${process.env.NEXT_PUBLIC_BASE_URL}${slug}`}
+			/>
 
 			<meta name="twitter:title" content={SEO.metaTitle} />
 			<meta name="twitter:description" content={SEO.metaDescription} />
