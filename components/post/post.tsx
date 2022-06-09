@@ -43,7 +43,7 @@ const Post: React.FC<Props> = ({ title, content, heroUrl, Author }) => {
 						as="h1"
 						textColor="white"
 						textAlign="center"
-						fontSize={{ base: "3xl", sm: "4xl", lg: "5xl" }}
+						fontSize={{ base: "3xl", sm: "4xl", xl: "5xl" }}
 						p="10px">
 						{title}
 					</Heading>

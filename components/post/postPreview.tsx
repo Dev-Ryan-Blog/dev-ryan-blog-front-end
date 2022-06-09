@@ -43,9 +43,10 @@ const PostPreview: React.FC<Props> = ({ post }) => {
 									fontSize={{
 										base: "3xl",
 										sm: "4xl",
-										lg: "5xl"
+										"2xl": "5xl"
 									}}
-									maxW="100%">
+									maxW="100%"
+									mb="10px">
 									{post.title}
 								</Heading>
 								<Text
