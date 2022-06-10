@@ -16,7 +16,7 @@ const Post: React.FC<Props> = ({ avatarUrl, name, slug, bio }) => {
 		<Center h="auto">
 			<Flex
 				h="100%"
-				width={["98%", "80%", "70%", "60%", "60%", "50%", "40%"]}
+				width={["98%", "90%", "75%", "60%", "60%", "50%", "40%"]}
 				align="center"
 				direction="column"
 				bg="background.200"

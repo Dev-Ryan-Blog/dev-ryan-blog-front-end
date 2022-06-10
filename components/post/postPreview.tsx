@@ -13,7 +13,7 @@ const PostPreview: React.FC<Props> = ({ post }) => {
 		<Center h="auto" py="1rem">
 			<Flex
 				h="100%"
-				width={["98%", "80%", "70%", "60%", "60%", "50%", "40%"]}
+				width={["98%", "90%", "75%", "60%", "60%", "50%", "40%"]}
 				align="center"
 				direction="column"
 				bg="background.200"

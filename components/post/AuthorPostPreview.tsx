@@ -1,6 +1,5 @@
 import { Box, Center, Flex, Heading, Text } from "@chakra-ui/react";
-import { css } from "@emotion/react";
-import { dateTimeToShortName } from "@util/dateTimeFormats";
+import AuthorChip from "@components/author/authorChip";
 import { AuthorPost } from "blogTypes";
 import Image from "next/image";
 import Link from "next/link";
@@ -15,7 +14,7 @@ const AuthorPostPreview: React.FC<Props> = ({ post }) => {
 		<Center h="auto" py="1rem">
 			<Flex
 				h="100%"
-				width={["98%", "80%", "70%", "60%", "60%", "50%", "40%"]}
+				width={["98%", "90%", "75%", "60%", "60%", "50%", "40%"]}
 				align="center"
 				direction="column"
 				bg="background.200"
@@ -35,36 +34,12 @@ const AuthorPostPreview: React.FC<Props> = ({ post }) => {
 					</Link>
 				</Box>
 				<Box py="10px" h="100%" w="100%">
-					<Flex>
-						<Link href={`/author/${post.Author.slug}`} passHref>
-							<a>
-								<Flex alignItems="center">
-									<Image
-										src={post.Author.avatarUrl}
-										layout="fixed"
-										alt="Author Avatar"
-										width="50px"
-										height="50px"
-										css={css`
-									border-radius: 50%;
-								`}
-									/>
-									<Box pl="5px">
-										<Text fontSize="sm" color="text.smoke">
-											<i>{post.Author.name}</i>
-										</Text>
-										<Text fontSize="sm" color="text.smoke">
-											<i>
-												{dateTimeToShortName(
-													new Date(post.createdAt)
-												)}
-											</i>
-										</Text>
-									</Box>
-								</Flex>
-							</a>
-						</Link>
-					</Flex>
+					<AuthorChip
+						avatarUrl={post.Author.avatarUrl}
+						name={post.Author.name}
+						slug={post.Author.slug}
+						createdAt={post.createdAt}
+					/>
 					<Box px={{ base: "0px", sm: "50px" }} pt="10px">
 						<Link href={`/${post.slug}`} passHref>
 							<a>
