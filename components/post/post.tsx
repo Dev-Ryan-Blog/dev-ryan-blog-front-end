@@ -33,7 +33,7 @@ const Post: React.FC<Props> = ({
 				rounded="10px"
 				p="10px"
 				my="1rem">
-				<Box w="100%" pb="8px">
+				<Box w="100%" pb="10px">
 					<Image
 						src={heroUrl}
 						layout="responsive"
