@@ -1,5 +1,6 @@
 import { Box, Flex, Stack } from "@chakra-ui/react";
 import React from "react";
+import LoginButton from "./loginButton";
 import Logo from "./logo";
 import MenuButton from "./menuButton";
 import MenuItem from "./menuItem";
@@ -29,6 +30,7 @@ const NavBar = () => {
 				<MenuItem to="/">Archive</MenuItem>
 				<MenuItem to="https://portfolio.devryan.io">About Me</MenuItem>
 				<MenuItem to="/contact">Contact</MenuItem>
+				<LoginButton />
 			</MenuLinks>
 		</NavBarContainer>
 	);

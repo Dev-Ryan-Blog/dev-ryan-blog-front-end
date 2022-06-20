@@ -1,6 +1,7 @@
 import { Box, Center, Flex, Heading } from "@chakra-ui/react";
 import AuthorChip from "@components/author/authorChip";
 import MarkdownRenderer from "@components/markdown/markdownRenderer";
+import Reactions from "@components/post/reactions";
 import { Author } from "blogTypes";
 import Image from "next/image";
 import React from "react";
@@ -13,6 +14,8 @@ type Props = {
 	description: string;
 	Author: Author;
 	createdAt: string;
+	isLiked: boolean;
+	isBookmarked: boolean;
 };
 
 const Post: React.FC<Props> = ({
@@ -20,7 +23,9 @@ const Post: React.FC<Props> = ({
 	content,
 	heroUrl,
 	Author,
-	createdAt
+	createdAt,
+	isLiked = false,
+	isBookmarked = false
 }) => {
 	return (
 		<Center h="auto">
@@ -64,6 +69,7 @@ const Post: React.FC<Props> = ({
 					</Heading>
 					<MarkdownRenderer>{content}</MarkdownRenderer>
 				</Box>
+				<Reactions isLiked={isLiked} isBookmarked={isBookmarked} />
 			</Flex>
 		</Center>
 	);

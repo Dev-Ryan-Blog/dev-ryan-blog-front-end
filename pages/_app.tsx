@@ -3,10 +3,11 @@ import NavBar from "@components/navigation/navBar";
 import "@fontsource/roboto";
 import "@styles/document.css";
 import Theme from "@themes/theme";
+import { SessionProvider } from "next-auth/react";
 import type { AppProps } from "next/app";
 import Head from "next/dist/shared/lib/head";
 
-function App({ Component, pageProps }: AppProps) {
+function App({ Component, pageProps: { session, ...pageProps } }: AppProps) {
 	return (
 		<>
 			<Head>
@@ -16,14 +17,20 @@ function App({ Component, pageProps }: AppProps) {
 				/>
 			</Head>
 			<ChakraProvider theme={Theme}>
-				<Grid templateRows="3.4rem auto">
-					<GridItem position="sticky" top="0px" left="0px" zIndex="1">
-						<NavBar />
-					</GridItem>
-					<GridItem minHeight="calc(100vh - 3.4rem)">
-						<Component {...pageProps} />
-					</GridItem>
-				</Grid>
+				<SessionProvider session={session}>
+					<Grid templateRows="3.4rem auto">
+						<GridItem
+							position="sticky"
+							top="0px"
+							left="0px"
+							zIndex="1">
+							<NavBar />
+						</GridItem>
+						<GridItem minHeight="calc(100vh - 3.4rem)">
+							<Component {...pageProps} />
+						</GridItem>
+					</Grid>
+				</SessionProvider>
 			</ChakraProvider>
 		</>
 	);

@@ -44,7 +44,7 @@ export async function getServerSideProps(
 	};
 }
 
-const Home: NextPage<Props> = (props: Props) => {
+const AuthorPage: NextPage<Props> = (props: Props) => {
 	const authorBioPosts = props.data;
 	const posts = authorBioPosts.posts;
 	return (
@@ -65,4 +65,4 @@ const Home: NextPage<Props> = (props: Props) => {
 	);
 };
 
-export default Home;
+export default AuthorPage;
