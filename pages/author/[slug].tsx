@@ -58,8 +58,8 @@ const AuthorPage: NextPage<Props> = (props: Props) => {
 				avatarUrl={authorBioPosts.avatarUrl}
 				slug={authorBioPosts.slug}
 			/>
-			{posts.map((post) => (
-				<PostPreview post={post} key={post.slug} />
+			{posts.map((post, index) => (
+				<PostPreview post={post} isFirst={index == 0} key={post.slug} />
 			))}
 		</main>
 	);

@@ -7,9 +7,10 @@ import React from "react";
 
 type Props = {
 	post: AuthorPost;
+	isFirst: boolean;
 };
 
-const AuthorPostPreview: React.FC<Props> = ({ post }) => {
+const AuthorPostPreview: React.FC<Props> = ({ post, isFirst }) => {
 	return (
 		<Center h="auto" py="1rem">
 			<Flex
@@ -29,6 +30,7 @@ const AuthorPostPreview: React.FC<Props> = ({ post }) => {
 								alt="Project Tumbnail"
 								width="2560px"
 								height="1080px"
+								priority={isFirst}
 							/>
 						</a>
 					</Link>

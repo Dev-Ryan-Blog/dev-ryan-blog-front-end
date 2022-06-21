@@ -56,6 +56,7 @@ export const responseToPosts = (response: Response): Array<AuthorPost> => {
 		};
 
 		let post: AuthorPost = {
+			id: Number.parseInt(rawPost.id),
 			title: rawPost.attributes.Title,
 			slug: rawPost.attributes.Slug,
 			content: rawPost.attributes.Content,
@@ -77,7 +78,7 @@ export const responseToPosts = (response: Response): Array<AuthorPost> => {
 export type Response = {
 	posts: {
 		data: Array<{
-			id: number;
+			id: string;
 			attributes: {
 				Title: string;
 				Slug: string;

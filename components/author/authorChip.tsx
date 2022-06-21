@@ -25,8 +25,8 @@ const AuthorChip: React.FC<Props> = ({ avatarUrl, name, slug, createdAt }) => {
 							width="50px"
 							height="50px"
 							css={css`
-                    border-radius: 50%;
-                `}
+								border-radius: 50%;
+							`}
 						/>
 						<Box pl="5px">
 							<Text fontSize="sm" color="text.smoke">

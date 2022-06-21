@@ -70,8 +70,12 @@ const Home: NextPage<Props> = (props: Props) => {
 				css={css`
 				height: 100%;
 			`}>
-				{posts.map((post) => (
-					<AuthorPostPreview post={post} key={post.slug} />
+				{posts.map((post, index) => (
+					<AuthorPostPreview
+						post={post}
+						isFirst={index == 0}
+						key={post.slug}
+					/>
 				))}
 			</main>
 		</>

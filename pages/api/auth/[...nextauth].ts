@@ -8,7 +8,6 @@ export default NextAuth({
 			clientSecret: process.env.GOOGLE_CLIENT_SECRET
 		})
 	],
-	debug: true,
 	callbacks: {
 		session({ session, user, token }): Awaitable<Session> {
 			session.jwt = token.jwt;
@@ -26,5 +25,7 @@ export default NextAuth({
 			}
 			return token;
 		}
-	}
+	},
+	pages: { signIn: "/auth/login", error: "error" },
+	debug: process.env.NODE_ENV == "development"
 });

@@ -6,9 +6,10 @@ import React from "react";
 
 type Props = {
 	post: Post;
+	isFirst: boolean;
 };
 
-const PostPreview: React.FC<Props> = ({ post }) => {
+const PostPreview: React.FC<Props> = ({ post, isFirst }) => {
 	return (
 		<Center h="auto" py="1rem">
 			<Flex
@@ -28,6 +29,7 @@ const PostPreview: React.FC<Props> = ({ post }) => {
 								alt="Project Tumbnail"
 								width="2560px"
 								height="1080px"
+								priority={isFirst}
 							/>
 						</a>
 					</Link>

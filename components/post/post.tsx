@@ -15,7 +15,9 @@ type Props = {
 	Author: Author;
 	createdAt: string;
 	isLiked: boolean;
+	likeCount: number;
 	isBookmarked: boolean;
+	bookmarkCount: number;
 };
 
 const Post: React.FC<Props> = ({
@@ -24,8 +26,10 @@ const Post: React.FC<Props> = ({
 	heroUrl,
 	Author,
 	createdAt,
-	isLiked = false,
-	isBookmarked = false
+	isLiked,
+	likeCount,
+	isBookmarked,
+	bookmarkCount
 }) => {
 	return (
 		<Center h="auto">
@@ -45,6 +49,7 @@ const Post: React.FC<Props> = ({
 						alt="Project Tumbnail"
 						width="2560px"
 						height="1080px"
+						priority
 					/>
 				</Box>
 				<Box w="100%">
@@ -69,7 +74,12 @@ const Post: React.FC<Props> = ({
 					</Heading>
 					<MarkdownRenderer>{content}</MarkdownRenderer>
 				</Box>
-				<Reactions isLiked={isLiked} isBookmarked={isBookmarked} />
+				<Reactions
+					isLiked={isLiked}
+					likeCount={likeCount}
+					isBookmarked={isBookmarked}
+					bookmarkCount={bookmarkCount}
+				/>
 			</Flex>
 		</Center>
 	);

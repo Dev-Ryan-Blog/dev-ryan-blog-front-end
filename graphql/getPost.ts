@@ -1,6 +1,80 @@
-import { Author, SEO, SEOPost } from "blogTypes";
+import {
+	Author,
+	ResponseCounts,
+	SEO,
+	SEOPost,
+	SeoReactionPost,
+	SeoReactionPostWithUser
+} from "blogTypes";
 
 export const getEndpoint = (base_url: string): string => `${base_url}/graphql`;
+
+export type GraphqlResponse = {
+	posts: {
+		data: Array<{
+			id: string;
+			attributes: {
+				Title: string;
+				Slug: string;
+				Content: string;
+				Description: string;
+				Hero: {
+					data: {
+						attributes: {
+							url: string;
+						};
+					};
+				};
+				author: {
+					data: {
+						attributes: {
+							Name: string;
+							Slug: string;
+							Avatar: {
+								data: {
+									attributes: {
+										url: string;
+									};
+								};
+							};
+						};
+					};
+				};
+				SEO: {
+					MetaTitle: string;
+					MetaDescription: string;
+				};
+				createdAt: string;
+				updatedAt: string;
+			};
+		}>;
+	};
+	likes: {
+		data: Array<ReactionResponse>;
+	};
+	bookmarks: {
+		data: Array<ReactionResponse>;
+	};
+};
+
+type ReactionResponse = {
+	attributes: {
+		post: {
+			data: {
+				id: string;
+			};
+		};
+		users_permissions_user: {
+			data: {
+				id: string;
+			};
+		};
+	};
+};
+
+export type Args = {
+	slug: string;
+};
 
 export const query = `
 query getPosts($slug: String) {
@@ -43,15 +117,75 @@ query getPosts($slug: String) {
             }
         }
     }
+	likes(filters: { post: { Slug: { eq: $slug } } }) {
+		data {
+			attributes {
+				post {
+					data {
+						id
+					}
+				}
+				users_permissions_user {
+					data {
+						id
+					}
+				}
+			}
+		}
+	}
+	bookmarks(filters: { post: { Slug: { eq: $slug } } }) {
+		data {
+			attributes {
+				post {
+					data {
+						id
+					}
+				}
+				users_permissions_user {
+					data {
+						id
+					}
+				}
+			}
+		}
+	}
 }`;
 
-export const responseToSEOPost = (response: Response): SEOPost => {
+export function responseToSEOReactionPostWithUser(
+	response: GraphqlResponse,
+	userId: number | null = null
+): SeoReactionPostWithUser {
+	console.log("0");
+	const seoReactionPost = responseToSEOReactionPost(response);
+
+	const rawLikes = response.likes.data;
+	const rawBookmarks = response.bookmarks.data;
+
+	const likeCounts = getReactionCounts(rawLikes, seoReactionPost.id);
+	const bookmarkCounts = getReactionCounts(rawBookmarks, seoReactionPost.id);
+	const isLiked = userId
+		? likeCounts.get(seoReactionPost.id)?.includes(userId) ?? false
+		: false;
+	let isBookmarked = userId
+		? bookmarkCounts.get(seoReactionPost.id)?.includes(userId) ?? false
+		: false;
+
+	const seoReactionPostWithUser: SeoReactionPostWithUser = {
+		...seoReactionPost,
+		isLiked,
+		isBookmarked
+	};
+
+	return seoReactionPostWithUser;
+}
+
+function responseToSEOReactionPost(response: GraphqlResponse): SeoReactionPost {
 	const prependStrapiUrl = (url: string): string =>
 		`${process.env.EXTERNAL_STRAPI_URL}${url}`;
 
 	const [rawPost] = response.posts.data;
 	if (typeof rawPost === "undefined") {
-		return {} as SEOPost;
+		return {} as SeoReactionPost;
 	}
 
 	const rawAuthor = rawPost.attributes.author.data.attributes;
@@ -69,7 +203,8 @@ export const responseToSEOPost = (response: Response): SEOPost => {
 		metaDescription: rawSEO.MetaDescription
 	};
 
-	const post: SEOPost = {
+	const seoPost: SEOPost = {
+		id: Number.parseInt(rawPost.id),
 		title: rawPost.attributes.Title,
 		slug: rawPost.attributes.Slug,
 		content: rawPost.attributes.Content,
@@ -81,51 +216,42 @@ export const responseToSEOPost = (response: Response): SEOPost => {
 		SEO: seo
 	};
 
-	return post;
-};
+	const rawLikes = response.likes.data;
+	const rawBookmarks = response.bookmarks.data;
+	const likeCounts = getReactionCounts(rawLikes, seoPost.id);
+	const bookmarkCounts = getReactionCounts(rawBookmarks, seoPost.id);
 
-export type Response = {
-	posts: {
-		data: Array<{
-			id: number;
-			attributes: {
-				Title: string;
-				Slug: string;
-				Content: string;
-				Description: string;
-				Hero: {
-					data: {
-						attributes: {
-							url: string;
-						};
-					};
-				};
-				author: {
-					data: {
-						attributes: {
-							Name: string;
-							Slug: string;
-							Avatar: {
-								data: {
-									attributes: {
-										url: string;
-									};
-								};
-							};
-						};
-					};
-				};
-				SEO: {
-					MetaTitle: string;
-					MetaDescription: string;
-				};
-				createdAt: string;
-				updatedAt: string;
-			};
-		}>;
+	const seoReactionPost: SeoReactionPost = {
+		...seoPost,
+		likeCount: likeCounts.get(seoPost.id)!.length,
+		bookmarkCount: bookmarkCounts.get(seoPost.id)!.length
 	};
-};
 
-export type Args = {
-	slug: string;
-};
+	return seoReactionPost;
+}
+
+function getReactionCounts(
+	rawReactions: Array<ReactionResponse>,
+	postId: number
+): ResponseCounts {
+	const initalAccumulator = new Map() as ResponseCounts;
+	initalAccumulator.set(postId, []);
+
+	const reactionCounts = rawReactions.reduce(
+		(accumulator: ResponseCounts, currentValue) => {
+			const postId = Number.parseInt(
+				currentValue.attributes.post.data.id
+			);
+			const userId = Number.parseInt(
+				currentValue.attributes.users_permissions_user.data.id
+			);
+			const nextAccumulator: Array<number> = accumulator.get(postId)!;
+			nextAccumulator.push(userId);
+			accumulator.set(postId, nextAccumulator ?? accumulator.get(postId));
+			return accumulator;
+		},
+		initalAccumulator
+	);
+
+	return reactionCounts;
+}
